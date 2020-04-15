@@ -2,10 +2,7 @@ import React from "react";
 import GoogleMapReact from "google-map-react";
 import MapMarker from "./MapMarker.js";
 import MapSettings from "./MapSettings.js";
-<<<<<<< HEAD
-import { bootstrapURLkey } from "./bootstrapURLkey.js";
-=======
->>>>>>> 5dea9b7... add map marker and country select
+import { bootstrapURLkey } from "../bootstrapURLkey.js";
 
 class Map extends React.Component {
   static defaultProps = {
@@ -19,11 +16,7 @@ class Map extends React.Component {
         <GoogleMapReact
           style={{ height: "100vh", width: "100vh" }}
           bootstrapURLKeys={{
-<<<<<<< HEAD
-            key: { bootstrapURLkey },
-=======
-            key: "AIzaSyBvUMhUkGgH720qwZ4l4uspo52ueVd9-io",
->>>>>>> 5dea9b7... add map marker and country select
+            key: bootstrapURLkey,
             language: "en",
           }}
           defaultCenter={this.props.center}
