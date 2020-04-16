@@ -10,6 +10,10 @@ class Map extends React.Component {
     super(props);
     this.state = {
       covidData: {},
+      heatmapData: {
+        positions: [],
+        options: { dissipating: true, radius: 100, opacity: 0.7 },
+      },
       currentCountry: "",
       center: { lat: 0, lng: 0 },
       zoom: 0,
@@ -38,19 +42,33 @@ class Map extends React.Component {
         totalDeaths: data["TotalDeaths"],
         totalRecovered: data["TotalRecovered"],
       };
+
       return obj;
     };
+
     fetch("https://api.covid19api.com/summary").then((data) => {
-      let formattedData;
+      let formattedData,
+        heatmapData = { positions: [] };
       data.json().then((json) => {
         formattedData = json["Countries"].reduce(dataReducer, {});
         for (var countryCode in formattedData) {
           if (!(typeof centroids[countryCode] === "undefined")) {
             formattedData[countryCode]["centroid"] = centroids[countryCode];
+          } else {
+            delete formattedData[countryCode];
           }
+        }
+        for (var countryCode in formattedData) {
+          heatmapData["positions"].push({
+            code: countryCode,
+            lat: formattedData[countryCode]["centroid"]["lat"],
+            lng: formattedData[countryCode]["centroid"]["lng"],
+            weight: formattedData[countryCode]["totalConfirmed"],
+          });
         }
         this.setState((state, props) => ({
           covidData: formattedData,
+          heatmapData: heatmapData, //{positions: [{ lat: 42.546245, lng: 1.601554, weight: 1 }]},
         }));
       });
     });
@@ -69,6 +87,8 @@ class Map extends React.Component {
             key: bootstrapURLkey,
             language: "en",
           }}
+          heatmapLibrary={true}
+          heatmap={this.state.heatmapData}
           defaultCenter={this.state.center}
           defaultZoom={this.state.zoom}
         >
