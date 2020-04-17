@@ -1,56 +1,40 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-import MapMarker from "./MapMarker.js";
 import MapSettings from "./MapSettings.js";
+import moment from "moment";
 import { bootstrapURLkey } from "../bootstrapURLkey.js";
 import centroidJson from "../content/centroids.json";
+import * as reducers from "../utilities/reducers";
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      covidData: {},
-      heatmapData: {
-        positions: [],
-        options: { dissipating: true, radius: 100, opacity: 0.7 },
+      covidCountryData: null,
+      heatmapData: null,
+      heatmapOptions: {
+        options: { dissipating: true, radius: 50, opacity: 0.7 },
       },
       currentCountry: "",
       center: { lat: 0, lng: 0 },
       zoom: 0,
     };
     this.handleCountryChange = this.handleCountryChange.bind(this);
+    this.initializeMap = this.initializeMap.bind(this);
+    this.setHeatmapData = this.setHeatmapData.bind(this);
   }
 
   handleCountryChange(event) {
-    this.setState({ currentCountry: event.target.value });
+    this.setState({ currentCountry: event.target.value }, this.setHeatmapData);
   }
 
-  componentDidMount() {
-    const centroidReducer = (obj, centroid) => {
-      obj[centroid["country"]] = {
-        lat: centroid["latitude"],
-        lng: centroid["longitude"],
-      };
-      return obj;
-    };
-    const centroids = centroidJson.reduce(centroidReducer, {});
-
-    const dataReducer = (obj, data) => {
-      obj[data["CountryCode"]] = {
-        name: data["Country"],
-        totalConfirmed: data["TotalConfirmed"],
-        totalDeaths: data["TotalDeaths"],
-        totalRecovered: data["TotalRecovered"],
-      };
-
-      return obj;
-    };
+  initializeMap() {
+    const centroids = centroidJson.reduce(reducers.centroidReducer, {});
 
     fetch("https://api.covid19api.com/summary").then((data) => {
-      let formattedData,
-        heatmapData = { positions: [] };
+      let formattedData;
       data.json().then((json) => {
-        formattedData = json["Countries"].reduce(dataReducer, {});
+        formattedData = json["Countries"].reduce(reducers.dataReducer, {});
         for (var countryCode in formattedData) {
           if (!(typeof centroids[countryCode] === "undefined")) {
             formattedData[countryCode]["centroid"] = centroids[countryCode];
@@ -58,26 +42,66 @@ class Map extends React.Component {
             delete formattedData[countryCode];
           }
         }
-        for (var countryCode in formattedData) {
-          heatmapData["positions"].push({
-            code: countryCode,
-            lat: formattedData[countryCode]["centroid"]["lat"],
-            lng: formattedData[countryCode]["centroid"]["lng"],
-            weight: formattedData[countryCode]["totalConfirmed"],
-          });
-        }
-        this.setState((state, props) => ({
-          covidData: formattedData,
-          heatmapData: heatmapData, //{positions: [{ lat: 42.546245, lng: 1.601554, weight: 1 }]},
-        }));
+        this.setState({ covidCountryData: formattedData }, this.setHeatmapData);
       });
     });
   }
+
+  setHeatmapData() {
+    let heatmapData = {
+      positions: [],
+    };
+    if (this.state.currentCountry === "") {
+      for (var countryCode in this.state.covidCountryData) {
+        heatmapData["positions"].push({
+          code: countryCode,
+          lat: this.state.covidCountryData[countryCode]["centroid"]["lat"],
+          lng: this.state.covidCountryData[countryCode]["centroid"]["lng"],
+          weight: this.state.covidCountryData[countryCode]["totalConfirmed"],
+        });
+      }
+      this.setState({ heatmapData: heatmapData });
+    } else {
+      const country = this.state.covidCountryData[this.state.currentCountry][
+        "slug"
+      ];
+      fetch(
+        "https://api.covid19api.com/country/" +
+          country +
+          "/status/confirmed?from=" +
+          moment().subtract(1, "days").format() +
+          "&to=" +
+          moment().format()
+      ).then((data) => {
+        data.json().then((json) => {
+          json.forEach((dataPoint) => {
+            if (dataPoint["Cases"] > 0) {
+              heatmapData["positions"].push({
+                lat: dataPoint["Lat"],
+                lng: dataPoint["Lon"],
+                weight: dataPoint["Cases"],
+              });
+            }
+          });
+          this.setState({ heatmapData: heatmapData });
+        });
+      });
+    }
+  }
+
+  componentWillMount() {
+    this.initializeMap();
+  }
+
   render() {
     return (
       <>
         <MapSettings
-          countries={this.state.covidData}
+          countries={
+            this.state.covidCountryData === null
+              ? {}
+              : this.state.covidCountryData
+          }
           currentCountry={this.state.currentCountry}
           handleCountryChange={this.handleCountryChange}
         />
@@ -88,12 +112,10 @@ class Map extends React.Component {
             language: "en",
           }}
           heatmapLibrary={true}
-          heatmap={this.state.heatmapData}
+          heatmap={{ ...this.state.heatmapData, ...this.state.heatmapOptions }}
           defaultCenter={this.state.center}
           defaultZoom={this.state.zoom}
-        >
-          <MapMarker {...this.props.center} text="100" />
-        </GoogleMapReact>
+        ></GoogleMapReact>
       </>
     );
   }

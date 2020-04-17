@@ -10,6 +10,7 @@ class MapSettings extends React.Component {
           onChange={this.props.handleCountryChange}
           style={mapSettingsStyle}
         >
+          <option value="">- Select a Country -</option>
           {Object.keys(this.props.countries).map((countryCode) => {
             return (
               <option value={countryCode} key={countryCode}>
