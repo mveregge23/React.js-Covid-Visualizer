@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "/React.js-covid-visualizer/static/css/main.c7446496.chunk.css",
-    "main.js": "/React.js-covid-visualizer/static/js/main.828b81a6.chunk.js",
-    "main.js.map": "/React.js-covid-visualizer/static/js/main.828b81a6.chunk.js.map",
+    "main.js": "/React.js-covid-visualizer/static/js/main.3c64b731.chunk.js",
+    "main.js.map": "/React.js-covid-visualizer/static/js/main.3c64b731.chunk.js.map",
     "runtime-main.js": "/React.js-covid-visualizer/static/js/runtime-main.07e968ab.js",
     "runtime-main.js.map": "/React.js-covid-visualizer/static/js/runtime-main.07e968ab.js.map",
     "static/css/2.de424728.chunk.css": "/React.js-covid-visualizer/static/css/2.de424728.chunk.css",
-    "static/js/2.c6ea4f02.chunk.js": "/React.js-covid-visualizer/static/js/2.c6ea4f02.chunk.js",
-    "static/js/2.c6ea4f02.chunk.js.map": "/React.js-covid-visualizer/static/js/2.c6ea4f02.chunk.js.map",
+    "static/js/2.e3567dc1.chunk.js": "/React.js-covid-visualizer/static/js/2.e3567dc1.chunk.js",
+    "static/js/2.e3567dc1.chunk.js.map": "/React.js-covid-visualizer/static/js/2.e3567dc1.chunk.js.map",
     "index.html": "/React.js-covid-visualizer/index.html",
-    "precache-manifest.a65ae262330f8d961ef100a071936374.js": "/React.js-covid-visualizer/precache-manifest.a65ae262330f8d961ef100a071936374.js",
+    "precache-manifest.7aa5904692b1c21e1cdfac2e69d3e19f.js": "/React.js-covid-visualizer/precache-manifest.7aa5904692b1c21e1cdfac2e69d3e19f.js",
     "service-worker.js": "/React.js-covid-visualizer/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/React.js-covid-visualizer/static/css/2.de424728.chunk.css.map",
     "static/css/main.c7446496.chunk.css.map": "/React.js-covid-visualizer/static/css/main.c7446496.chunk.css.map",
-    "static/js/2.c6ea4f02.chunk.js.LICENSE.txt": "/React.js-covid-visualizer/static/js/2.c6ea4f02.chunk.js.LICENSE.txt",
+    "static/js/2.e3567dc1.chunk.js.LICENSE.txt": "/React.js-covid-visualizer/static/js/2.e3567dc1.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/React.js-covid-visualizer/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.07e968ab.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.c6ea4f02.chunk.js",
+    "static/js/2.e3567dc1.chunk.js",
     "static/css/main.c7446496.chunk.css",
-    "static/js/main.828b81a6.chunk.js"
+    "static/js/main.3c64b731.chunk.js"
   ]
 }
