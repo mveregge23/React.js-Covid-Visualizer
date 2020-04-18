@@ -19,6 +19,25 @@ class Map extends React.Component {
       center: { lat: 0, lng: 0 },
       zoom: 0,
     };
+
+    const centroids = centroidJson.reduce(reducers.centroidReducer, {});
+
+    fetch("https://api.covid19api.com/summary").then((data) => {
+      var formattedData;
+      data.json().then((json) => {
+        formattedData = json["Countries"].reduce(reducers.dataReducer, {});
+        for (var countryCode in formattedData) {
+          if (!(typeof centroids[countryCode] === "undefined")) {
+            formattedData[countryCode]["centroid"] = centroids[countryCode];
+          } else {
+            delete formattedData[countryCode];
+          }
+        }
+        this.state.covidCountryData = formattedData;
+        this.setHeatmapData();
+      });
+    });
+
     this.handleCountryChange = this.handleCountryChange.bind(this);
     this.initializeMap = this.initializeMap.bind(this);
     this.setHeatmapData = this.setHeatmapData.bind(this);
@@ -60,7 +79,7 @@ class Map extends React.Component {
           weight: this.state.covidCountryData[countryCode]["totalConfirmed"],
         });
       }
-      this.setState({ heatmapData: heatmapData });
+      this.setState({ heatmapData: heatmapData }, this.forceUpdate);
     } else {
       const country = this.state.covidCountryData[this.state.currentCountry][
         "slug"
@@ -83,41 +102,43 @@ class Map extends React.Component {
               });
             }
           });
-          this.setState({ heatmapData: heatmapData });
+          this.setState({ heatmapData: heatmapData }, this.forceUpdate);
         });
       });
     }
   }
 
-  componentWillMount() {
-    this.initializeMap();
-  }
-
   render() {
-    return (
-      <>
-        <MapSettings
-          countries={
-            this.state.covidCountryData === null
-              ? {}
-              : this.state.covidCountryData
-          }
-          currentCountry={this.state.currentCountry}
-          handleCountryChange={this.handleCountryChange}
-        />
-        <GoogleMapReact
-          style={{ height: "100vh", width: "100vh" }}
-          bootstrapURLKeys={{
-            key: bootstrapURLkey,
-            language: "en",
-          }}
-          heatmapLibrary={true}
-          heatmap={{ ...this.state.heatmapData, ...this.state.heatmapOptions }}
-          defaultCenter={this.state.center}
-          defaultZoom={this.state.zoom}
-        ></GoogleMapReact>
-      </>
-    );
+    if (
+      this.state.covidCountryData === null ||
+      this.state.heatmapData === null
+    ) {
+      return <div>Loading</div>;
+    } else {
+      return (
+        <>
+          <MapSettings
+            countries={this.state.covidCountryData}
+            currentCountry={this.state.currentCountry}
+            handleCountryChange={this.handleCountryChange}
+          />
+          <GoogleMapReact
+            style={{ height: "100vh", width: "100vh" }}
+            bootstrapURLKeys={{
+              key: bootstrapURLkey,
+              language: "en",
+            }}
+            heatmapLibrary={true}
+            heatmap={{
+              ...this.state.heatmapData,
+              ...this.state.heatmapOptions,
+            }}
+            defaultCenter={this.state.center}
+            defaultZoom={this.state.zoom}
+          ></GoogleMapReact>
+        </>
+      );
+    }
   }
 }
 
