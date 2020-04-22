@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "../logo.svg";
 import "../styles/App.css";
 import Map from "./Map.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
