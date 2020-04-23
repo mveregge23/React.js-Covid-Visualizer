@@ -15,6 +15,8 @@ class Map extends React.Component {
       countryDetails: "",
       center: { lat: 0, lng: 0 },
       zoom: 0,
+      map: null,
+      maps: null,
     };
 
     this.heatmapOptions = {
@@ -30,6 +32,11 @@ class Map extends React.Component {
 
     this.handleCountryChange = this.handleCountryChange.bind(this);
     this.setHeatmapData = this.setHeatmapData.bind(this);
+    this.onApiLoad = this.onApiLoad.bind(this);
+  }
+
+  onApiLoad(map, maps) {
+    this.setState({ map: map, maps: maps });
   }
 
   handleCountryChange(event) {
@@ -62,16 +69,6 @@ class Map extends React.Component {
               ""
             ) : (
               <CountryDetails
-                lat={
-                  this.state.covidCountryData[this.state.currentCountry][
-                    "centroid"
-                  ]["lat"]
-                }
-                lng={
-                  this.state.covidCountryData[this.state.currentCountry][
-                    "centroid"
-                  ]["lng"]
-                }
                 data={this.state.covidCountryData[this.state.currentCountry]}
               />
             );
@@ -79,6 +76,16 @@ class Map extends React.Component {
             { heatmapData: heatmapData, countryDetails: countryDetails },
             this.forceUpdate
           );
+          let bounds = new this.state.maps.LatLngBounds();
+          for (let i = 0; i < heatmapData["positions"].length; i++) {
+            bounds.extend(
+              new this.state.maps.LatLng(
+                heatmapData["positions"][i]["lat"],
+                heatmapData["positions"][i]["lng"]
+              )
+            );
+          }
+          this.state.map.fitBounds(bounds);
         });
       });
     }
@@ -91,6 +98,20 @@ class Map extends React.Component {
     ) {
       return <div>Loading</div>;
     } else {
+      const handleApiLoaded = (map, maps) => {
+        /*let bounds = new maps.LatLngBounds();
+        for (let i = 0; i < this.state.heatmapData["positions"].length; i++) {
+          bounds.extend(
+            new maps.LatLng(
+              this.state.heatmapData["positions"][i]["lat"],
+              this.state.heatmapData["positions"][i]["lng"]
+            )
+          );
+        }
+        map.fitBounds(bounds);*/
+        map.setOptions({ maxZoom: 4 });
+        this.setState({ map: map, maps: maps });
+      };
       return (
         <>
           <MapSettings
@@ -105,11 +126,14 @@ class Map extends React.Component {
               ...this.state.heatmapData,
               ...this.heatmapOptions,
             }}
+            yesIWantToUseGoogleMapApiInternals={true}
+            onGoogleApiLoaded={({ map, maps }) => {
+              handleApiLoaded(map, maps);
+            }}
             defaultCenter={this.state.center}
             defaultZoom={this.state.zoom}
-          >
-            {this.state.countryDetails}
-          </GoogleMap>
+          ></GoogleMap>
+          {this.state.countryDetails}
         </>
       );
     }

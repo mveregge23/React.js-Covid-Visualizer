@@ -8,7 +8,7 @@ function CountryDetails(props) {
       <ul>
         <li>Confirmed Cases: {props.data.totalConfirmed}</li>
         <li>Deaths: {props.data.totalDeaths}</li>
-        <li>Recoveries: {props.data.totalRecoveries}</li>
+        <li>Recoveries: {props.data.totalRecovered}</li>
       </ul>
     </div>
   );
