@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/React.js-covid-visualizer/static/css/main.c7446496.chunk.css",
-    "main.js": "/React.js-covid-visualizer/static/js/main.37431e0f.chunk.js",
-    "main.js.map": "/React.js-covid-visualizer/static/js/main.37431e0f.chunk.js.map",
+    "main.css": "/React.js-covid-visualizer/static/css/main.595b0eec.chunk.css",
+    "main.js": "/React.js-covid-visualizer/static/js/main.f7369467.chunk.js",
+    "main.js.map": "/React.js-covid-visualizer/static/js/main.f7369467.chunk.js.map",
     "runtime-main.js": "/React.js-covid-visualizer/static/js/runtime-main.07e968ab.js",
     "runtime-main.js.map": "/React.js-covid-visualizer/static/js/runtime-main.07e968ab.js.map",
     "static/css/2.de424728.chunk.css": "/React.js-covid-visualizer/static/css/2.de424728.chunk.css",
-    "static/js/2.ef32ab69.chunk.js": "/React.js-covid-visualizer/static/js/2.ef32ab69.chunk.js",
-    "static/js/2.ef32ab69.chunk.js.map": "/React.js-covid-visualizer/static/js/2.ef32ab69.chunk.js.map",
+    "static/js/2.7cfe9da5.chunk.js": "/React.js-covid-visualizer/static/js/2.7cfe9da5.chunk.js",
+    "static/js/2.7cfe9da5.chunk.js.map": "/React.js-covid-visualizer/static/js/2.7cfe9da5.chunk.js.map",
     "index.html": "/React.js-covid-visualizer/index.html",
-    "precache-manifest.f711941c1c28cd990dd217239b1c5897.js": "/React.js-covid-visualizer/precache-manifest.f711941c1c28cd990dd217239b1c5897.js",
+    "precache-manifest.49d928feb8946154f1c93c093dcf8d65.js": "/React.js-covid-visualizer/precache-manifest.49d928feb8946154f1c93c093dcf8d65.js",
     "service-worker.js": "/React.js-covid-visualizer/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/React.js-covid-visualizer/static/css/2.de424728.chunk.css.map",
-    "static/css/main.c7446496.chunk.css.map": "/React.js-covid-visualizer/static/css/main.c7446496.chunk.css.map",
-    "static/js/2.ef32ab69.chunk.js.LICENSE.txt": "/React.js-covid-visualizer/static/js/2.ef32ab69.chunk.js.LICENSE.txt"
+    "static/css/main.595b0eec.chunk.css.map": "/React.js-covid-visualizer/static/css/main.595b0eec.chunk.css.map",
+    "static/js/2.7cfe9da5.chunk.js.LICENSE.txt": "/React.js-covid-visualizer/static/js/2.7cfe9da5.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.07e968ab.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.ef32ab69.chunk.js",
-    "static/css/main.c7446496.chunk.css",
-    "static/js/main.37431e0f.chunk.js"
+    "static/js/2.7cfe9da5.chunk.js",
+    "static/css/main.595b0eec.chunk.css",
+    "static/js/main.f7369467.chunk.js"
   ]
 }
