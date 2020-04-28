@@ -1,7 +1,7 @@
 const countryDetailsStyle = {
   width: "300px",
   backgroundColor: "gray",
-  opacity: 0.8,
+  opacity: 0.95,
   borderRadius: "50px",
   padding: "10px",
   position: "absolute",
@@ -9,4 +9,14 @@ const countryDetailsStyle = {
   left: "40px",
 };
 
-export { countryDetailsStyle };
+const detailsContainer = {
+  width: "80%",
+  height: "80%",
+  margin: "auto",
+};
+
+const listStyle = {
+  textAlign: "left",
+};
+
+export { countryDetailsStyle, detailsContainer, listStyle };

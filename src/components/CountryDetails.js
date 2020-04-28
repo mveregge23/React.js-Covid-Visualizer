@@ -1,15 +1,23 @@
 import React from "react";
-import { countryDetailsStyle } from "../styles/CountryDetailsStyle";
+import {
+  countryDetailsStyle,
+  listStyle,
+  detailsContainer,
+} from "../styles/CountryDetailsStyle";
 
 function CountryDetails(props) {
   return (
     <div style={countryDetailsStyle}>
-      <h4>{props.data.name}</h4>
-      <ul>
-        <li>Confirmed Cases: {props.data.totalConfirmed}</li>
-        <li>Deaths: {props.data.totalDeaths}</li>
-        <li>Recoveries: {props.data.totalRecovered}</li>
-      </ul>
+      <div style={detailsContainer}>
+        <h4>{props.data.name}</h4>
+        <div style={listStyle}>
+          <ul>
+            <li>Confirmed Cases: {props.data.totalConfirmed}</li>
+            <li>Deaths: {props.data.totalDeaths}</li>
+            <li>Recoveries: {props.data.totalRecovered}</li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
