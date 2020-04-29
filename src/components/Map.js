@@ -31,7 +31,7 @@ class Map extends React.Component {
 
     /* fetching the generic summary data for all countries used to render 
        worldwide heatmap */
-    fetch("https://api.covid19api.c/summary")
+    fetch("https://api.covid19api.com/summary")
       .then((data) => {
         data.json().then((json) => {
           const summaryData = df.getFormattedSummary(json);
@@ -99,7 +99,7 @@ class Map extends React.Component {
       // fetch data from the last 24 hours if able to connect to api
       if (!this.state.couldNotConnectToApi) {
         fetch(
-          "https://api.covid19api.c/country/" +
+          "https://api.covid19api.com/country/" +
             country +
             "/status/confirmed?from=" +
             moment().subtract(1, "days").format() +
