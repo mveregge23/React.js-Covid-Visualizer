@@ -5,6 +5,9 @@ import {
   detailsContainer,
 } from "../styles/CountryDetailsStyle";
 
+/* CountryDetails is a component that displays the number
+   of confirmed cases, number of deaths, and number of
+   recoveries (all passed through props) for a specific country */
 function CountryDetails(props) {
   return (
     <div style={countryDetailsStyle}>
